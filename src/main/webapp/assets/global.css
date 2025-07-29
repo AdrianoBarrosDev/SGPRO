@@ -1,0 +1,32 @@
+body {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	margin: 0;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input {
+	display: block;
+    margin-bottom: 15px;
+    padding: 8px;
+    width: 300px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.submitButton {
+	color: white;
+	background-color: blue;
+	width: 150px;
+	height: 55px;
+	border: none;
+	border-radius: 10;
+}
