@@ -35,7 +35,7 @@ public class UsuarioService {
 	        	}
 	        	
 	        }
-	        
+
 	        UsuarioDAO usuarioDao = new UsuarioDAO(connection);
 	        usuarioDao.salvar(usuario);
 	        connection.commit();
@@ -106,6 +106,7 @@ public class UsuarioService {
 			
 			EmpresaDAO empresaDao = new EmpresaDAO(connection);
 			Optional<Empresa> empresaBuscada = empresaDao.findById(empresaId);
+			
 			if(!empresaBuscada.isPresent()) {
 				return Optional.empty();
 			}
@@ -121,10 +122,7 @@ public class UsuarioService {
 					boolean validarPermissaoUsuarioEmpresa = permissoesDao.validarPermissaoUsuarioEmpresa(usuarioBuscado.get().getId(), empresaBuscada.get().getId());
 					
 					if(validarPermissaoUsuarioEmpresa) {
-						usuarioBuscado.get().getEmpresa().setNome(empresaBuscada.get().getNome());
-						usuarioBuscado.get().getEmpresa().setCnpj(empresaBuscada.get().getCnpj());
-						usuarioBuscado.get().getEmpresa().setEmailContato(empresaBuscada.get().getEmailContato());
-						usuarioBuscado.get().getEmpresa().setTelefone(empresaBuscada.get().getTelefone());
+						usuarioBuscado.get().setEmpresa(empresaBuscada.get());
 						usuarioBuscado.get().setSenha("");
 						return usuarioBuscado;
 					}

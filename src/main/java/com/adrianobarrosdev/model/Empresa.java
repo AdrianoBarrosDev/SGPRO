@@ -1,5 +1,7 @@
 package com.adrianobarrosdev.model;
 
+import java.util.List;
+
 public class Empresa {
 	
 	private int id;
@@ -9,6 +11,8 @@ public class Empresa {
 	private String telefone;
 	private String chaveAdmin;
 	private String chaveGestor;
+	private List<Colaborador> listaColaboradores;
+	private List<Setor> listaSetores;
 	
 	public Empresa() {
 		
@@ -92,6 +96,22 @@ public class Empresa {
 
 	public void setChaveGestor(String chaveGestor) {
 		this.chaveGestor = chaveGestor;
+	}
+
+	public List<Colaborador> getListaColaboradores() {
+		return listaColaboradores;
+	}
+
+	public void setListaColaboradores(List<Colaborador> listaColaboradores) {
+		this.listaColaboradores = listaColaboradores;
+	}
+
+	public List<Setor> getListaSetores() {
+		return listaSetores;
+	}
+
+	public void setListaSetores(List<Setor> listaSetores) {
+		this.listaSetores = listaSetores;
 	}
 	
 }

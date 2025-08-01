@@ -4,17 +4,67 @@
     
 <struts>
 	<constant name="struts.enable.DynamicMethodInvocation" value="true" />
+	<constant name="struts.action.extension" value="" />
+	<constant name="struts.action.excludePattern" value="/static/.*" />
 	
     <package name="default" namespace="/" extends="struts-default">
     
-        <action name="criarUsuario" class="com.adrianobarrosdev.controller.UserAction" method="create">
-            <result name="success">/success.jsp</result>
+    	<interceptors>
+	        <interceptor name="auth" class="com.adrianobarrosdev.interceptor.AutenticacaoInterceptor"/>
+	        <interceptor-stack name="authStack">
+	            <interceptor-ref name="auth"/>
+	            <interceptor-ref name="defaultStack"/>
+	        </interceptor-stack>
+	    </interceptors>
+    	
+    	<!-- Ações públicas -->
+    	<action name="inicio">
+    		<result>/index.jsp</result>
+    	</action>
+        
+        <action name="login">
+        	<result>/login.jsp</result>
         </action>
+        
+        <action name="cadastro">
+        	<result>/cadastro.jsp</result>
+        </action>
+        
         <action name="validarLogin" class="com.adrianobarrosdev.controller.ValidarLoginAction">
-        	<result name="sistemaPessoa">pessoa/dashboard.jsp</result>
-        	<result name="sistemaEmpresa">empresa/dashboard.jsp</result>
+        	<result name="success" type="redirectAction">carregarDashboard</result>
         	<result name="input">/login.jsp</result>
         </action>
+        
+        <action name="criarUsuario" class="com.adrianobarrosdev.controller.UserAction" method="create">
+            <result name="success">/login.jsp</result>
+        </action>
+        
+        <!-- Ações protegidas -->
+        <action name="carregarDashboard" class="com.adrianobarrosdev.controller.CarregarDashboardAction">
+        	<interceptor-ref name="authStack"/>
+        	<result name="success" type="redirectAction">dashboard</result>
+        </action>
+        
+        <action name="logoutUsuario" class="com.adrianobarrosdev.controller.LogoutUsuarioAction">
+        	<interceptor-ref name="authStack"/>
+        	<result name="success">/login.jsp</result>
+        </action>
+        
+    	<action name="dashboard" class="com.adrianobarrosdev.controller.DashboardAction">
+    		<interceptor-ref name="authStack"/>
+    		<result name="pessoa">pessoa/dashboard.jsp</result>
+    		<result name="empresa">empresa/dashboard.jsp</result>
+		</action>
+		
+		<action name="colaboradores">
+			<interceptor-ref name="authStack"/>
+			<result>empresa/colaboradores.jsp</result>
+		</action>
+		
+		<action name="setores">
+			<interceptor-ref name="authStack"/>
+			<result>empresa/setores.jsp</result>
+		</action>
         
     </package>
 </struts>

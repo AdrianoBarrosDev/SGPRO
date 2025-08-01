@@ -3,35 +3,42 @@ package com.adrianobarrosdev.controller;
 import java.util.Map;
 import java.util.Optional;
 
+import org.apache.struts2.interceptor.SessionAware;
+
 import com.adrianobarrosdev.model.Usuario;
 import com.adrianobarrosdev.service.UsuarioService;
-import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
-public class ValidarLoginAction extends ActionSupport {
+public class ValidarLoginAction extends ActionSupport implements SessionAware {
 	
 	private static final long serialVersionUID = 1L;
 
 	private UsuarioService usuarioService = new UsuarioService();
 	
-	private String cpf;
-	private String senha;
+	private Map<String, Object> session;
+	private String cpfLogin;
+	private String senhaLogin;
 	private String empresaId;
 	
-	public String getCpf() {
-		return cpf;
+	@Override
+	public void setSession(Map<String, Object> session) {
+		this.session = session;
 	}
 	
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
+	public String getCpfLogin() {
+		return cpfLogin;
 	}
 	
-	public String getSenha() {
-		return senha;
+	public void setCpfLogin(String cpfLogin) {
+		this.cpfLogin = cpfLogin;
 	}
 	
-	public void setSenha(String senha) {
-		this.senha = senha;
+	public String getSenhaLogin() {
+		return senhaLogin;
+	}
+	
+	public void setSenhaLogin(String senhaLogin) {
+		this.senhaLogin = senhaLogin;
 	}
 	
 	public String getEmpresaId() {
@@ -41,52 +48,39 @@ public class ValidarLoginAction extends ActionSupport {
 	public void setEmpresaId(String empresaId) {
 		this.empresaId = empresaId;
 	}
+	
+	@Override
+	public void validate() {
+		if (cpfLogin == null || cpfLogin.trim().isEmpty()) {
+	        addFieldError("cpfLogin", "CPF é obrigatório.");
+	    }
 
+	    if (senhaLogin == null || senhaLogin.trim().isEmpty()) {
+	        addFieldError("senhaLogin", "Senha é obrigatória.");
+	    }
+	}
+
+	@Override
 	public String execute() {
+
+		Optional<Usuario> usuarioValidado;
 		
-		if (cpf == null || cpf.isEmpty()) {
-		    addFieldError("cpf", "CPF é obrigatório.");
-		}
-
-		if (senha == null || senha.isEmpty()) {
-		    addFieldError("senha", "Senha é obrigatória.");
-		}
-
-		if (hasFieldErrors()) {
-		    return INPUT;
+		if (empresaId == null || empresaId.isEmpty()) {
+			usuarioValidado = usuarioService.validarLogin(cpfLogin, senhaLogin);
+		} else {
+			usuarioValidado = usuarioService.validarUsuarioEmpresa(cpfLogin, senhaLogin, empresaId);
 		}
 		
-		if(empresaId == null || empresaId.isEmpty()) {
-			Optional<Usuario> usuarioValidado = usuarioService.validarLogin(cpf, senha);
-			if(usuarioValidado.isPresent()) {
-				
-				Map<String, Object> session = ActionContext.getContext().getSession();
-				session.put("usuarioLogado", usuarioValidado.get());
-				
-				return "sistemaPessoa";
-				
-			} else {
-				addActionError("CPF ou senha inválidos.");
-				return INPUT;
-			}
+		if (usuarioValidado.isPresent()) {
+			Usuario usuario = usuarioValidado.get();
+			session.put("usuarioLogado", usuario);
+			return SUCCESS;
 			
 		} else {
-			Optional<Usuario> usuarioValidado = usuarioService.validarUsuarioEmpresa(cpf, senha, empresaId);
-			if(usuarioValidado.isPresent()) {
-				
-				Map<String, Object> session = ActionContext.getContext().getSession();
-				session.put("usuarioLogado", usuarioValidado.get());
-				
-				return "sistemaEmpresa";
-				
-			} else {
-				addActionError("CPF, senha ou ID Empresa inválidos.");
-				return INPUT;
-			}
+			addActionError("Credenciais inválidas.");
+			return INPUT;
 		}
 		
 	}
-	
-	
 	
 }

@@ -5,13 +5,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
+<%@ page import="java.util.List" %>
+
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="UTF-8">
 	<title>SGPRO</title>
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/assets/dashboard.css" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/assets/global.css" />
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/assets/dashboard.css" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/assets/navCustomizada.css" />
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
 </head>
@@ -48,7 +50,6 @@
 	</nav>
 	
 	<div class="content">
-	
 		<h1>${sessionScope.usuarioLogado.empresa.nome}</h1>
 		<div class="row w-100 d-flex justify-content-between align-items-stretch mb-5">
 			
@@ -94,45 +95,6 @@
 			</div>
 			
 		</div>
-		
-		<div class="row w-100 d-flex justify-content-start align-items-stretch mb-5">
-			<div class="col-12 p-0">
-				
-				<div class="d-flex justify-content-start align-items-start flex-column customCard box px-5 py-4">
-					<h2 class="mb-4 mt-3">Exames a Vencer nos próximos 30 dias</h2>
-				
-					<div class="tabela-wrapper">
-						<table class="examesProximosTable">
-							<thead>
-								<tr>
-									<th>Setor</th>
-									<th>Colaborador</th>
-									<th>Tipo Exame</th>
-									<th>Data Prevista</th>
-								</tr>
-							</thead>
-						</table>
-						<div class="tabela-scroll-body">
-							<table class="examesProximosTable">
-						    	<tbody>
-						      		<c:forEach var="exame" items="${sessionScope.examesPendentes}">
-						       			<tr>
-						         			<td>${exame.nomeSetor}</td>
-											<td>${exame.nomeColaborador}</td>
-											<td>${exame.tipoExame}</td>
-								         	<td><fmt:formatDate value="${exame.dataPrevista}" pattern="dd/MM/yyyy" /></td>
-								         </tr>
-					     			</c:forEach>
-					      		</tbody>
-						    </table>
-			  			</div>
-					</div>
-				</div>
-				
-			</div>
-		</div>
-		
-		
 	</div>
 
 </body>

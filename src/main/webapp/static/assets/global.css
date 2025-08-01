@@ -1,10 +1,26 @@
-body {
+
+.content {
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	min-height: 100vh;
-	margin: 0;
+	justify-content: start;
+	align-items: start;
+	margin-left: 260px;
+	padding: 40px 70px 50px 80px;
+	
+	h1 {
+		color: #0F4264;
+		font-size: 80px;
+		font-weight: bold;
+		font-family: "Quicksand";
+		margin-bottom: 75px;
+	}
+	
+	h2 {
+		color: #303030;
+		font-size: 20px;
+		font-weight: bold;
+		font-family: "Quicksand";
+	}
 }
 
 label {

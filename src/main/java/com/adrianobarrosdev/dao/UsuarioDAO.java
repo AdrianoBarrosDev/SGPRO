@@ -21,7 +21,7 @@ public class UsuarioDAO {
 	
 	public void salvar(Usuario usuario) {
 		
-		String sql = "INSERT INTO usuario (senha, pessoa_id) VALUES(?, ?, ?)";
+		String sql = "INSERT INTO usuario (senha, pessoa_id) VALUES(?, ?)";
 		try (PreparedStatement ps = connection.prepareStatement(sql, Statement.NO_GENERATED_KEYS)) {
 			
 			ps.setString(1, usuario.getSenha());
@@ -42,7 +42,7 @@ public class UsuarioDAO {
 	
 	public Optional<Usuario> findByCpf(String cpf) {
 		
-		String sql = "SELECT u.id, u.senha, u.pessoa_id, u.empresa_id FROM usuario AS u JOIN pessoa AS p ON u.pessoa_id = p.id WHERE p.cpf = ?";
+		String sql = "SELECT u.id, u.senha, u.pessoa_id, u.empresa_id, p.nome AS nomePessoa FROM usuario AS u JOIN pessoa AS p ON u.pessoa_id = p.id WHERE p.cpf = ?";
 		try(PreparedStatement ps = connection.prepareStatement(sql)) {
 			
 			ps.setString(1, cpf);
@@ -53,7 +53,12 @@ public class UsuarioDAO {
 					Usuario usuario = new Usuario();
 					usuario.setId(rs.getInt("id"));
 					usuario.setSenha(rs.getString("senha"));
-					usuario.setPessoa(new Pessoa(rs.getInt("pessoa_id")));
+					
+					Pessoa pessoa = new Pessoa();
+					pessoa.setId(rs.getInt("pessoa_id"));
+					pessoa.setNome(rs.getString("nomePessoa"));
+					usuario.setPessoa(pessoa);
+					
 					usuario.setEmpresa(new Empresa(rs.getInt("empresa_id")));
 					return Optional.of(usuario);
 				}

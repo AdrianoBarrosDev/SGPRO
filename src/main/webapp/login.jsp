@@ -1,27 +1,37 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
+
+<%
+    // Verifica se o usuário está na sessão
+    if (session.getAttribute("usuarioLogado") != null) {
+        response.sendRedirect("dashboard");
+        return;
+    }
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="UTF-8">
 	<title>SGPRO</title>
-	<link rel="stylesheet" href="assets/global.css" />
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/assets/global.css" />
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/assets/entrada.css" />
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
 	<h2 class="mb-5">Entrar</h2>
 	
-	<s:form action="/validarLogin" method="POST">
+	<s:form action="validarLogin" method="POST">
 	
-		<label for="cpf">CPF</label>
-		<s:textfield name="cpf" label="CPF" cssClass="inputCentralizado" theme="simple"/>
-		<s:fielderror fieldName="cpf"/>
+		<label for="cpfLogin">CPF</label>
+		<s:textfield name="cpfLogin" cssClass="inputCentralizado" theme="simple"/>
+		<s:fielderror fieldName="cpfLogin"/>
 		
-		<label for="senha">Senha</label>
-		<s:textfield name="senha" label="Senha" cssClass="inputCentralizado" theme="simple"/>
-		<s:fielderror fieldName="senha"/>
+		<label for="senhaLogin">Senha</label>
+		<s:textfield name="senhaLogin" cssClass="inputCentralizado" theme="simple"/>
+		<s:fielderror fieldName="senhaLogin"/>
 		
 		<label for="empresaId">ID Empresa</label>
-		<s:textfield name="empresaId" label="EmpresaId" cssClass="inputCentralizado" theme="simple"/>
+		<s:textfield name="empresaId" cssClass="inputCentralizado" theme="simple"/>
 		<s:fielderror fieldName="empresaId"/>
 		
 		<s:if test="hasActionErrors()">

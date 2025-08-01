@@ -1,10 +1,20 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
+
+<%
+	//Verifica se o usuário está na sessão
+	if (session.getAttribute("usuarioLogado") != null) {
+	    response.sendRedirect("dashboard");
+	    return;
+	}
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="UTF-8">
 	<title>SGPRO</title>
-	<link rel="stylesheet" href="assets/global.css" />
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/assets/global.css" />
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/assets/entrada.css" />
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
