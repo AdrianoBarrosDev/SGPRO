@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+.setor {
+	display: flex;
+	flex-direction: column;
+	justify-content: start;
+	align-items: start;
+	width: 250px;
+	height: 230px;
+	padding: 25px 25px 40px 25px;
+}
+
+.boxSetor {
+	
+	display: flex;
+	justify-content: start;
+	align-items: start;
+	flex-direction: column;
+	
+	p {
+		margin: 0;
+		font-family: "Poppins";
+		text-align: center;
+	}
+	
+	.setorNome {
+		font-size: 20px;
+		font-weight: 700;
+	}
+	
+	.dadosTitulo {
+		font-size: 12px;
+		font-weight: 500;
+	}
+	
+	.dadosInfo {
+		font-size: 10px;
+		color: rgba(48, 48, 48, 0.8);
+		margin-bottom: 10px;
+	}
+}
+
+.customCard {
+	border: none;
+	border-radius: 25px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}

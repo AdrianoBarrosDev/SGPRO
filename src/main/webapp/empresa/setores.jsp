@@ -13,7 +13,7 @@
 	<meta charset="UTF-8">
 	<title>SGPRO</title>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/assets/global.css" />
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/assets/dashboard.css" />
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/assets/setores.css" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/assets/navCustomizada.css" />
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
 </head>
@@ -33,11 +33,11 @@
 				<img class="me-3" src="static/images/DashboardIcon.png" />
 				Visão Geral
 			</a>
-			<a href="colaboradores" class="${currentPage == 'colaboradores.jsp' ? 'ativado' : 'desativado'}">
+			<a href="carregarColaboradores" class="${currentPage == 'colaboradores.jsp' ? 'ativado' : 'desativado'}">
 				<img class="me-3" src="static/images/ColaboradoresIcon.png" />
 				Colaboradores
 			</a>
-			<a href="setores" class="${currentPage == 'setores.jsp' ? 'ativado' : 'desativado'}">
+			<a href="carregarSetores" class="${currentPage == 'setores.jsp' ? 'ativado' : 'desativado'}">
 				<img class="me-3" src="static/images/SetoresIcon.png" />
 				Setores
 			</a>
@@ -53,45 +53,41 @@
 		<h1>${sessionScope.usuarioLogado.empresa.nome}</h1>
 		<div class="row w-100 d-flex justify-content-between align-items-stretch mb-5">
 			
-			<div class="col-12 col-lg-6 d-flex justify-content-between align-items-start flex-wrap gap-5">
-				
-				<div>
-					<h2 class="mb-4">Exames Pendentes por Setor</h2>
-					<div class="d-flex justify-content-start align-items-start flex-wrap examesPendentes">
-					
-						<c:forEach var="setor" items="${sessionScope.usuarioLogado.empresa.listaSetores}">
-							<div class="setor customCard">
-								<img src="static/images/SetorIcon.png" />
-								<div class="boxSetor">
-									<p class="setorNome">${setor.nome}</p>
-									<p class="quantidadeExames">${setor.examesPendentes}</p>								
-								</div>
-							</div>
-		     			</c:forEach>
-		     			
-					</div>
-				</div>
-				
-				<div class="d-flex w-100 justify-content-between align-items-center pe-5 me-5">
-					<button class="detailsButton">Ver Detalhes</button>
-					<button class="transparentButton">Gerar PDF</button>
-				</div>
-				
-			</div>
-			
-			<div class="col-12 col-lg-6 d-flex justify-content-start align-items-start flex-column customCard px-5 py-4">
-				
-				<h2 class="mb-4 mt-3">Índice de Uso de EPI por Setor</h2>
-				<div class="d-flex w-100 justify-content-start align-items-start flex-column">
-					<% for (int i = 0; i < 6; i++) { %>
-						<div class="d-flex justify-content-start align-items-center w-100">
-							<div class="line me-4"></div>
-							<p class="porcentagem">50%</p>
+			<div class="col-12 d-flex justify-content-start align-items-start flex-wrap" style="gap: 50px">
+				<c:forEach var="setor" items="${sessionScope.usuarioLogado.empresa.listaSetores}">
+					<div class="setor customCard justify-content-between align-items-center flex-row">
+						<div class="boxSetor">
+						
+							<p class="setorNome" style="margin-bottom: 15px">${setor.nome}</p>
+							
+							<p class="dadosTitulo">Colaboradores</p>
+							<p class="dadosInfo">${setor.quantidadeColaboradores}</p>
+							
+							<p class="dadosTitulo">Riscos Associados</p>
+							<p class="dadosInfo">0 graves, 0 leves</p>
+							
+							<p class="dadosTitulo">Exames Pendentes</p>
+							<p class="dadosInfo">${setor.examesPendentes}</p>
+													
 						</div>
-						<p class="nomeSetorIndice">Financeiro</p>
-					<% } %>
-				</div>
-				
+						
+						<div class="bg-dark" style="width:1px; height:100%; margin-left: 50px"></div>
+						
+						<div class="acoes flex-column gap-3">
+							<button class="acao" 
+								type="button" 
+								data-bs-toggle="modal" 
+								data-bs-target="#enviarExame" 
+								data-nome="${colaborador.pessoa.nome}"
+								data-exameId="${colaborador.listaExamesPendentes[0].id}"
+							>
+								<img src="static/images/Criar.png" />
+							</button>
+							<button class="acao"><img src="static/images/Deletar.png" /></button>
+							<button class="acao"><img src="static/images/Visualizar.png" /></button>
+						</div>
+					</div>
+	   			</c:forEach>
 			</div>
 			
 		</div>

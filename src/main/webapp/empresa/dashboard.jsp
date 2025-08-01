@@ -31,11 +31,11 @@
 				<img class="me-3" src="static/images/DashboardIcon.png" />
 				Visão Geral
 			</a>
-			<a href="colaboradores" class="${currentPage == 'colaboradores.jsp' ? 'ativado' : 'desativado'}">
+			<a href="carregarColaboradores" class="${currentPage == 'colaboradores.jsp' ? 'ativado' : 'desativado'}">
 				<img class="me-3" src="static/images/ColaboradoresIcon.png" />
 				Colaboradores
 			</a>
-			<a href="setores" class="${currentPage == 'setores.jsp' ? 'ativado' : 'desativado'}">
+			<a href="carregarSetores" class="${currentPage == 'setores.jsp' ? 'ativado' : 'desativado'}">
 				<img class="me-3" src="static/images/SetoresIcon.png" />
 				Setores
 			</a>
@@ -63,7 +63,7 @@
 								<img src="static/images/SetorIcon.png" />
 								<div class="boxSetor">
 									<p class="setorNome">${setor.nome}</p>
-									<p class="quantidadeExames">${setor.examesPendentes}</p>								
+									<p class="quantidadeExames">${setor.examesPendentes}</p>
 								</div>
 							</div>
 		     			</c:forEach>
@@ -72,7 +72,7 @@
 				</div>
 				
 				<div class="d-flex w-100 justify-content-between align-items-center pe-5 me-5">
-					<button class="detailsButton">Ver Detalhes</button>
+					<button class="detailsButton" onclick="window.location.href='setores'">Ver Detalhes</button>
 					<button class="transparentButton">Gerar PDF</button>
 				</div>
 				

@@ -75,7 +75,7 @@ public class EmpresaDAO {
 	
 	public List<Colaborador> atualizarListaColaboradoresEmpresa(int empresaId) {
 		
-		String sql = "SELECT c.id AS colaborador_id, p.nome AS pessoa_nome, p.email AS pessoa_email, p.cpf AS pessoa_cpf, p.telefone AS pessoa_telefone, p.dataNascimento AS pessoa_dataNascimento, "
+		String sql = "SELECT c.id AS colaborador_id, c.status, p.nome AS pessoa_nome, p.email AS pessoa_email, p.cpf AS pessoa_cpf, p.telefone AS pessoa_telefone, p.dataNascimento AS pessoa_dataNascimento, "
 				+ "c.matricula AS colaborador_matricula, c.cargo AS colaborador_cargo, c.dataAdmissao AS colaborador_dataAdmissao, "
 				+ "s.id AS setor_id, s.nome AS setor_nome FROM colaborador AS c "
 				+ "JOIN pessoa AS p ON c.pessoa_id = p.id "
@@ -107,6 +107,8 @@ public class EmpresaDAO {
 							new Setor(rs.getInt("setor_id"), rs.getString("setor_nome"), null, null)
 					);
 					
+					colaborador.setStatus(rs.getString("status"));
+					
 					listaColaboradores.add(colaborador);
 				}
 			}
@@ -122,12 +124,18 @@ public class EmpresaDAO {
 	
 	public List<Setor> atualizarListaSetoresEmpresa(int empresaId) {
 		
-		String sql = "SELECT s.id AS setorId, s.nome AS setorNome, s.localizacao, s.descricao, COUNT(ex.id) AS examesPendentes FROM setor AS s "
-				+ "JOIN empresa AS e ON e.id = s.empresa_id "
-				+ "JOIN colaborador AS c ON c.setor_id = s.id "
-				+ "JOIN exames AS ex ON ex.colaborador_id = c.id "
-				+ "WHERE e.id = ? AND ex.dataPrevista < CURRENT_DATE "
-				+ "GROUP BY s.id, s.nome, s.localizacao, s.descricao";
+		String sql = "SELECT " +
+	             "s.id AS setorId, " +
+	             "s.nome AS setorNome, " +
+	             "s.localizacao, " +
+	             "s.descricao, " +
+	             "COUNT(CASE WHEN ex.dataPrevista < CURRENT_DATE THEN 1 END) AS examesPendentes " +
+	             "FROM setor AS s " +
+	             "JOIN empresa AS e ON e.id = s.empresa_id " +
+	             "LEFT JOIN colaborador AS c ON c.setor_id = s.id " +
+	             "LEFT JOIN exames AS ex ON ex.colaborador_id = c.id " +
+	             "WHERE e.id = ? " +
+	             "GROUP BY s.id, s.nome, s.localizacao, s.descricao";
 		
 		List<Setor> listaSetores = new ArrayList<>();
 		

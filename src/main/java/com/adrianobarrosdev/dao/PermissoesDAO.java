@@ -14,7 +14,7 @@ public class PermissoesDAO {
 	}
 	
 	public void salvar(int usuarioId, int empresaId) { 
-		String sql = "INSERT INTO permissoes VALUES (?, ?)";
+		String sql = "INSERT INTO permissoes(usuario_id, empresa_id) VALUES (?, ?)";
 		try(PreparedStatement ps = connection.prepareStatement(sql)) {
 			ps.setInt(1, usuarioId);
 			ps.setInt(2, empresaId);

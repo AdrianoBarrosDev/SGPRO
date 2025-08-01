@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.adrianobarrosdev.model.Exames;
 import com.adrianobarrosdev.model.ExamesPendentes;
 
 public class ExamesDAO {
@@ -15,6 +16,59 @@ public class ExamesDAO {
 	
 	public ExamesDAO(Connection connection) {
 		this.connection = connection;
+	}
+	
+	
+	public void enviarExame(int exameId, String url) {
+		
+		String sql = "UPDATE exames SET status = 'Enviado', caminhoArquivo = ? WHERE id = ?";
+		try(PreparedStatement ps = connection.prepareStatement(sql)) {
+			
+			ps.setString(1, url);
+			ps.setInt(2, exameId);
+			ps.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+	public List<Exames> examesColaborador(int colaboradorId) {
+		
+		List<Exames> listaExames = new ArrayList<>();
+		
+		String sql = "SELECT e.id AS exame_id, e.tipo, e.dataPrevista, e.status AS exame_status, e.caminhoArquivo FROM exames AS e "
+				+ "JOIN colaborador AS c ON e.colaborador_id = c.id "
+				+ "WHERE e.colaborador_id = ? "
+				+ "ORDER BY e.dataPrevista";
+		
+		try(PreparedStatement ps = connection.prepareStatement(sql)) {
+
+			ps.setInt(1, colaboradorId);
+			
+			try(ResultSet rs = ps.executeQuery()) {
+				while(rs.next()) {
+					
+					Exames exame = new Exames();
+					exame.setId(rs.getInt("exame_id"));
+					exame.setTipo(rs.getString("tipo"));
+					exame.setDataRealizacao(new java.util.Date(rs.getDate("dataPrevista").getTime()));
+					exame.setStatus(rs.getString("exame_status"));
+					exame.setCaminhoArquivo(rs.getString("caminhoArquivo"));
+					
+					listaExames.add(exame);
+					
+				}
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return listaExames;
+		
 	}
 	
 	public List<ExamesPendentes> examesPendentesMesEmpresa(int empresaId) {

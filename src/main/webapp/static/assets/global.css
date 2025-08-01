@@ -46,3 +46,17 @@ input {
 	border: none;
 	border-radius: 10;
 }
+
+.acoes {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.acao {
+	border: none;
+	background-color: white;
+	margin-left: 15px;
+	padding: 0;
+}
+

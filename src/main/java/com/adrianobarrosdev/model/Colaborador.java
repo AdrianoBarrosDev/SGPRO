@@ -11,19 +11,24 @@ public class Colaborador {
 	private String cargo;
 	private Date dataAdmissao;
 	private Setor setor;
+	private String status;
+	private String indicadorRisco;
 	private List<Exames> listaExames;
+	private List<Exames> listaExamesPendentes;
 	
 	public Colaborador() {
 		
 	}
 	
-	public Colaborador(int id, Pessoa pessoa, String matricula, String cargo, Date dataAdmissao, Setor setor, List<Exames> listaExames) {
+	public Colaborador(int id, Pessoa pessoa, String matricula, String cargo, Date dataAdmissao, Setor setor, String status, String indicadorRisco, List<Exames> listaExames) {
 		this.id = id;
 		this.pessoa = pessoa;
 		this.matricula = matricula;
 		this.cargo = cargo;
 		this.dataAdmissao = dataAdmissao;
 		this.setor = setor;
+		this.status = status;
+		this.indicadorRisco = indicadorRisco;
 		this.listaExames = listaExames;
 	}
 
@@ -75,12 +80,36 @@ public class Colaborador {
 		this.setor = setor;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getIndicadorRisco() {
+		return indicadorRisco;
+	}
+
+	public void setIndicadorRisco(String indicadorRisco) {
+		this.indicadorRisco = indicadorRisco;
+	}
+
 	public List<Exames> getListaExames() {
 		return listaExames;
 	}
 
 	public void setListaExames(List<Exames> listaExames) {
 		this.listaExames = listaExames;
+	}
+
+	public List<Exames> getListaExamesPendentes() {
+		return listaExamesPendentes;
+	}
+
+	public void setListaExamesPendentes(List<Exames> listaExamesPendentes) {
+		this.listaExamesPendentes = listaExamesPendentes;
 	}
 	
 }

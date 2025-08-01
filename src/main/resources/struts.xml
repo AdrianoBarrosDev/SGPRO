@@ -56,10 +56,30 @@
     		<result name="empresa">empresa/dashboard.jsp</result>
 		</action>
 		
+        <action name="carregarColaboradores" class="com.adrianobarrosdev.controller.CarregarColaboradoresAction">
+        	<interceptor-ref name="authStack"/>
+        	<result name="success" type="redirectAction">colaboradores</result>
+        </action>
+		
 		<action name="colaboradores">
 			<interceptor-ref name="authStack"/>
 			<result>empresa/colaboradores.jsp</result>
 		</action>
+		
+		<action name="enviarExame" class="com.adrianobarrosdev.controller.EnviarExameAction">
+			<interceptor-ref name="authStack"/>
+			<result name="success" type="redirectAction">carregarColaboradores</result>
+		</action>
+		
+		<action name="permissaoColaborador" class="com.adrianobarrosdev.controller.GerarPermissaoAction">
+			<interceptor-ref name="authStack"/>
+			<result name="success" type="redirectAction">carregarColaboradores</result>
+		</action>
+		
+		<action name="carregarSetores" class="com.adrianobarrosdev.controller.CarregarSetoresAction">
+        	<interceptor-ref name="authStack"/>
+        	<result name="success" type="redirectAction">setores</result>
+        </action>
 		
 		<action name="setores">
 			<interceptor-ref name="authStack"/>

@@ -8,6 +8,7 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
+   	<img src="static/images/SgproLogoSmall.png" style="margin: -200px 0px 100px 0px" />
     <h1>Bem-vindo!</h1>
     <div class="d-flex gap-5">
 		<a href="login">Entrar</a>

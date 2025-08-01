@@ -7,6 +7,7 @@ public class Setor {
 	private String localizacao;
 	private String descricao;
 	private int examesPendentes;
+	private int quantidadeColaboradores = 0;
 	
 	public Setor() {
 		
@@ -57,6 +58,14 @@ public class Setor {
 
 	public void setExamesPendentes(int examesPendentes) {
 		this.examesPendentes = examesPendentes;
+	}
+
+	public int getQuantidadeColaboradores() {
+		return quantidadeColaboradores;
+	}
+
+	public void setQuantidadeColaboradores(int quantidadeColaboradores) {
+		this.quantidadeColaboradores = quantidadeColaboradores;
 	}
 	
 }

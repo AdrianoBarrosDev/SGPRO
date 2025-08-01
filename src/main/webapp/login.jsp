@@ -27,7 +27,7 @@
 		<s:fielderror fieldName="cpfLogin"/>
 		
 		<label for="senhaLogin">Senha</label>
-		<s:textfield name="senhaLogin" cssClass="inputCentralizado" theme="simple"/>
+		<s:password name="senhaLogin" cssClass="inputCentralizado" theme="simple"/>
 		<s:fielderror fieldName="senhaLogin"/>
 		
 		<label for="empresaId">ID Empresa</label>
